@@ -1,0 +1,27 @@
+{
+  "name": "e-ration",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aakarshsak/e-ration.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aakarshsak/e-ration/issues"
+  },
+  "homepage": "https://github.com/aakarshsak/e-ration#readme",
+  "dependencies": {
+    "config": "^3.2.3",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.7.5",
+    "morgan": "^1.9.1"
+  }
+}
