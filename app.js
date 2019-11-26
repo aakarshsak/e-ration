@@ -11,22 +11,43 @@ const express = require('express');  //express backend framework package
 const morgan = require('morgan');       //http request logger package for developement
 const debug = require('debug')('app:debug');  //debug package to get the debugging messages to the console
 const config = require('config');   //to setup the configuration environment
-
+const mongoose = require('mongoose');   //mongoose module to interact with the mongodb database
 
 /*Custom made local modules*/
 const home = require('./routes/home');  //home route of the web application
+const users = require('./routes/users'); //user registration route of the web app
+const auth = require('./routes/auth');
+
+/*Custom Variables initialization*/
+if(!config.get('jwtPrivateKey')){
+    console.log('FATAL ERROR!  jwtPrivateKey NOT INITIALISED IN CUSTOM VARIABLES');
+    process.exit(-1);
+}
 
 const app = express();   //Making an instance of the express application
 
+
+mongoose.connect('mongodb://localhost/e-ration')
+  .then(() => console.log('Connected to MongoDB...'))
+  .catch(err => console.error('Could not connect to MongoDB...'));
+
+
+debug(app.get('env'));
+debug(config.get('name'));
 app.use(express.json());
-if(app.get('env') == 'developement')
+if(app.get('env') == 'development')
     app.use(morgan('tiny'));
 app.use(express.static('public'));
 
-app.use('/home', home);
 
-const port = process.env.PORT || 3000;
+//Calling the custom made routes
+app.use('/', home);
+app.use('/user/register', users);
+app.use('/user/login', auth);
+
+
+const port = process.env.PORT || config.get('port');  //defining the port to the application in the environment variables or 3000.
 
 app.listen(port, () => {
-    debug(`Listening on port : ${port}`);
+    console.log(`Listening on port : ${port}`);
 });

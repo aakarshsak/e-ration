@@ -1,3 +1,4 @@
 {
-    "password" : "ration_password"
+    "password" : "ration_password",
+    "jwtPrivateKey" : "ration_jwtPrivateKey"
 }
