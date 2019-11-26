@@ -16,7 +16,7 @@ const mongoose = require('mongoose');   //mongoose module to interact with the m
 /*Custom made local modules*/
 const home = require('./routes/home');  //home route of the web application
 const users = require('./routes/users'); //user registration route of the web app
-const auth = require('./routes/auth');
+const auth = require('./routes/auth');  //Authentication route for user login
 
 /*Custom Variables initialization*/
 if(!config.get('jwtPrivateKey')){
