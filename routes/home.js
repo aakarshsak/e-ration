@@ -6,4 +6,12 @@ routes.get('/', (req, res) => {
     res.render('./index.ejs');
 });
 
+routes.get('/login_page', (req, res) => {
+    res.render('./login.ejs');
+});
+
+routes.get('/registration_page', (req, res) => {
+    res.render('./register.ejs');
+});
+
 module.exports = routes;

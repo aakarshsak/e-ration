@@ -8,13 +8,47 @@ const _ = require('lodash');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
+
+    debug('Getting to user/register...');
+
+    if(req.body.first) {
+        req.body.name = { first : req.body.first, middle : req.body.middle, last : req.body.last };
+        delete req.body.first;
+        delete req.body.middle;
+        delete req.body.last;    
+    
+    }
+
+    if(req.body.pin) {
+        req.body.address = { 
+            pin : req.body.pin,
+            area : req.body.area,
+            house : req.body.house,
+            district : req.body.district,
+            state : req.body.state,
+            phone : req.body.phone,
+        };
+        delete req.body.pin;
+        delete req.body.area;
+        delete req.body.house;
+        delete req.body.district;
+        delete req.body.state;
+        delete req.body.phone;
+
+    
+    }
+
     const { error } = validateUser(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
 
     let user = await User.findOne({ email : req.body.email });
     if(user) return res.status(400).send('User already exist.');
 
-    user = await new User(_.pick(req.body, ["name", "email", "password"]));
+    let pass = req.body.password;
+    let repass = req.body.confirm_pass;
+    if(pass != repass) return res.status(400).send('Password Does not match');
+
+    user = await new User(_.pick(req.body, ["name", "email", "password", "aadhar", "address"]));
 
     const salt = await bcrypt.genSalt(2);
     user.password = await bcrypt.hash(user.password, salt);

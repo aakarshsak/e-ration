@@ -12,6 +12,8 @@ const morgan = require('morgan');       //http request logger package for develo
 const debug = require('debug')('app:debug');  //debug package to get the debugging messages to the console
 const config = require('config');   //to setup the configuration environment
 const mongoose = require('mongoose');   //mongoose module to interact with the mongodb database
+var bodyParser = require("body-parser");
+
 
 /*Custom made local modules*/
 const home = require('./routes/home');  //home route of the web application
@@ -25,6 +27,7 @@ if(!config.get('jwtPrivateKey')){
 }
 
 const app = express();   //Making an instance of the express application
+app.use(bodyParser.urlencoded({ extended: false }));
 
 
 mongoose.connect('mongodb://localhost/e-ration')
@@ -44,7 +47,6 @@ app.use(express.static('public'));
 app.use('/', home);
 app.use('/user/register', users);
 app.use('/user/login', auth);
-
 
 const port = process.env.PORT || config.get('port');  //defining the port to the application in the environment variables or 3000.
 
