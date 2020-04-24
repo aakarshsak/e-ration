@@ -5,6 +5,7 @@ const _ = require('lodash');
 const debug = require('debug')('app:debug');
 const auth = require('../middlewares/authenticate');
 
+
 const router = express.Router();
 
 router.get('/me', auth, async (req, res) => {
@@ -13,18 +14,30 @@ router.get('/me', auth, async (req, res) => {
     res.send(user);
 });
 
-router.post('/', async (req, res) => {
+
+router.post('/',  async (req, res) => {
 
     debug('Getting to the user/login api');
+    console.log(req.headers);
+    console.log(req.body.password, req.body.email);
 
     const { error } = validateAuth(req.body);
-    if(error) return res.status(400).send(error.details[0].message);
+    if(error) {
+        debug(error.details[0].message) ;
+        return res.status(400).send(error.details[0].message);
+    }
 
     const user = await User.findOne({ email : req.body.email });
-    if(!user) return res.status(400).send('Invalid email/password');
+    if(!user) {
+        debug('Invalid email') ;
+        return res.status(400).send('Invalid email/password');
+    }
 
     const match = await bcrypt.compare(req.body.password, user.password);
-    if(!match) return res.status(400).send('Invalid email/password');
+    if(!match) {
+        debug('password does not match'); 
+        return res.status(400).send('Invalid email/password');
+    }
 
     const token = user.getUserToken();
    

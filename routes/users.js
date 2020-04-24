@@ -39,14 +39,23 @@ router.post('/', async (req, res) => {
     }
 
     const { error } = validateUser(req.body); 
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) {
+        debug(error.details[0].message) ;
+        return res.status(400).send(error.details[0].message);
+    }
 
     let user = await User.findOne({ email : req.body.email });
-    if(user) return res.status(400).send('User already exist.');
+    if(user) {
+        debug('User already exist...') ;
+        return res.status(400).send('User already exist...');
+    }
 
     let pass = req.body.password;
     let repass = req.body.confirm_pass;
-    if(pass != repass) return res.status(400).send('Password Does not match');
+    if(pass != repass) {
+        debug('Password does not match.'); 
+        return res.status(400).send('Password does not match.');
+    }
 
     user = await new User(_.pick(req.body, ["name", "email", "password", "aadhar", "address"]));
 
@@ -58,7 +67,8 @@ router.post('/', async (req, res) => {
     user = await user.save();
     user = _.pick(user, ['name', 'email']);
 
-    res.header('x-auth-token', token).send(user);
+    debug('Successfully posted...')
+    res.send('Account Successfully Created...');
 
 })
 

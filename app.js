@@ -12,6 +12,7 @@ const morgan = require('morgan');       //http request logger package for develo
 const debug = require('debug')('app:debug');  //debug package to get the debugging messages to the console
 const config = require('config');   //to setup the configuration environment
 const mongoose = require('mongoose');   //mongoose module to interact with the mongodb database
+const cors = require('cors');
 var bodyParser = require("body-parser");
 
 
@@ -30,7 +31,7 @@ const app = express();   //Making an instance of the express application
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
-mongoose.connect('mongodb://localhost/e-ration')
+mongoose.connect('mongodb://localhost/e-ration',{ useNewUrlParser: true } )
   .then(() => console.log('Connected to MongoDB...'))
   .catch(err => console.error('Could not connect to MongoDB...'));
 
@@ -38,6 +39,9 @@ mongoose.connect('mongodb://localhost/e-ration')
 debug(app.get('env'));
 debug(config.get('name'));
 app.use(express.json());
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
 if(app.get('env') == 'development')
     app.use(morgan('tiny'));
 app.use(express.static('public'));

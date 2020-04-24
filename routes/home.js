@@ -11,7 +11,7 @@ routes.get('/login_page', (req, res) => {
 });
 
 routes.get('/registration_page', (req, res) => {
-    res.render('./register.ejs');
+    res.send('Hi This is a response!!!');
 });
 
 module.exports = routes;
