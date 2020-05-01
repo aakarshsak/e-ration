@@ -27,6 +27,7 @@ router.post('/', async (req, res) => {
             district : req.body.district,
             state : req.body.state,
             phone : req.body.phone,
+            country : req.body.country
         };
         delete req.body.pin;
         delete req.body.area;
@@ -34,6 +35,7 @@ router.post('/', async (req, res) => {
         delete req.body.district;
         delete req.body.state;
         delete req.body.phone;
+        delete req.body.country;
 
     
     }

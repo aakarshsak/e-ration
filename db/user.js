@@ -21,7 +21,9 @@ const userSchema = new mongoose.Schema({
         area : {type : String, required : false, minlength : 3, maxlength : 255},
         district : {type : String, required : true, minlength : 3, maxlength : 255},
         state : { type : String, required : true, minlength : 4, maxlength : 255 },
-        phone : {type : String, required : true, minlength : 7, maxlength : 10}
+        phone : {type : String, required : true, minlength : 7, maxlength : 10},
+        country : { type : String, required : true, minlength : 3, maxlength : 255 }
+
     }
 });
 
@@ -51,6 +53,7 @@ function validateUser(user) {
             district : Joi.string().min(3).max(255).required(),
             state : Joi.string().min(4).max(255).required(),
             phone : Joi.string().min(7).max(10).required(),
+            country : Joi.string().min(3).max(255).required(),
         }
     }
 

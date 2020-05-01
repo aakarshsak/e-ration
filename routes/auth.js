@@ -9,10 +9,18 @@ const auth = require('../middlewares/authenticate');
 const router = express.Router();
 
 router.get('/me', auth, async (req, res) => {
+    debug('fetching user data...');
     let user = await User.findById(req.user.id);
     user = _.pick(user, ["_id", "name", "email", "aadhar", "address"]);
     res.send(user);
 });
+
+router.get('/me/name', async (req, res) => {
+    debug('fetching user name...');
+    let user = await User.findOne({ aadhar : req.body.aadhar });
+    user = _.pick(user, ["name"]);
+    res.send(user.name.first + " " + user.name.middle + " " + user.name.last);
+})
 
 
 router.post('/',  async (req, res) => {
