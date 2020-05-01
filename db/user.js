@@ -8,16 +8,17 @@ const debug = require('debug')('app:debug');
 
 const userSchema = new mongoose.Schema({
     name : {  //type : String, required : true, minlength : 10, maxlength : 255 
-       first : { required : true, minlength : 5, maxlength : 255, type : String }, 
+       first : { required : true, minlength : 3, maxlength : 255, type : String }, 
        middle : { maxlength : 255, type : String }, 
        last : { required : true, minlength : 5, maxlength : 255, type : String }, 
     },
     email : { type : String, required : true, minlength : 10, maxlength : 255 },
     password : { type : String, required : true, minlength : 6, maxlength : 255 },
     aadhar : { type : String, required : true, minlength : 12, maxlength : 12 },
+    gender : { type : String, required : true, minlength : 4, maxlength : 6 },
     address : {
         pin : {type : String, required : true, minlength : 6, maxlength : 6},
-        house : {type : String, required : true, minlength : 4, maxlength : 255},
+        house : {type : String, required : true, minlength : 3, maxlength : 255},
         area : {type : String, required : false, minlength : 3, maxlength : 255},
         district : {type : String, required : true, minlength : 3, maxlength : 255},
         state : { type : String, required : true, minlength : 4, maxlength : 255 },
@@ -38,7 +39,7 @@ const User = mongoose.model('User', userSchema);
 function validateUser(user) {
     const schema = {
         name : {
-            first : Joi.string().min(5).max(255).required(),
+            first : Joi.string().min(3).max(255).required(),
             middle : Joi.string().max(255),
             last : Joi.string().min(5).max(255).required(),
         },
@@ -46,9 +47,10 @@ function validateUser(user) {
         password : Joi.string().min(6).max(255).required(),
         confirm_pass : Joi.string().min(6).max(255).required(),
         aadhar : Joi.string().min(12).max(12).required(),
+        gender : Joi.string().min(4).max(6).required(),
         address : {
             pin : Joi.string().min(6).max(6).required(),
-            house : Joi.string().min(4).max(255).required(),
+            house : Joi.string().min(3).max(255).required(),
             area : Joi.string().min(3).max(255).required(),
             district : Joi.string().min(3).max(255).required(),
             state : Joi.string().min(4).max(255).required(),

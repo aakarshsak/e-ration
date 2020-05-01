@@ -11,7 +11,7 @@ const router = express.Router();
 router.get('/me', auth, async (req, res) => {
     debug('fetching user data...');
     let user = await User.findById(req.user.id);
-    user = _.pick(user, ["_id", "name", "email", "aadhar", "address"]);
+    user = _.pick(user, ["_id", "name", "email", "aadhar", "address", "gender"]);
     res.send(user);
 });
 

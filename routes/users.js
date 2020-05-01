@@ -59,7 +59,7 @@ router.post('/', async (req, res) => {
         return res.status(400).send('Password does not match.');
     }
 
-    user = await new User(_.pick(req.body, ["name", "email", "password", "aadhar", "address"]));
+    user = await new User(_.pick(req.body, ["name", "email", "password", "aadhar", "address", "gender"]));
 
     const salt = await bcrypt.genSalt(2);
     user.password = await bcrypt.hash(user.password, salt);
