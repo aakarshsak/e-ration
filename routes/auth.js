@@ -19,7 +19,7 @@ router.get('/me/name', async (req, res) => {
     debug('fetching user name...');
     let user = await User.findOne({ aadhar : req.body.aadhar });
     user = _.pick(user, ["name"]);
-    res.send(user.name.first + " " + user.name.middle + " " + user.name.last);
+    res.send(user);
 })
 
 
