@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
     },
     email : { type : String, required : true, minlength : 10, maxlength : 255 },
     password : { type : String, required : true, minlength : 6, maxlength : 255 },
-    aadhar : { type : String, required : true, minlength : 12, maxlength : 12 },
+    ration : { type : String, required : true, minlength : 10, maxlength : 10 },
     gender : { type : String, required : true, minlength : 4, maxlength : 6 },
     address : {
         pin : {type : String, required : true, minlength : 6, maxlength : 6},
@@ -46,7 +46,7 @@ function validateUser(user) {
         email : Joi.string().email().min(10).max(255).required(),
         password : Joi.string().min(6).max(255).required(),
         confirm_pass : Joi.string().min(6).max(255).required(),
-        aadhar : Joi.string().min(12).max(12).required(),
+        ration : Joi.string().min(10).max(10).required(),
         gender : Joi.string().min(4).max(6).required(),
         address : {
             pin : Joi.string().min(6).max(6).required(),
@@ -64,7 +64,7 @@ function validateUser(user) {
 
 function validateAuth(user) {
     const schema = {
-        email : Joi.string().email().min(5).max(255).required(),
+        ration : Joi.string().min(10).max(10).required(),
         password : Joi.string().min(5).max(255).required()
     }
 

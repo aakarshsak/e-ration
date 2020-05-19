@@ -20,13 +20,14 @@ var bodyParser = require("body-parser");
 const home = require('./routes/home');  //home route of the web application
 const users = require('./routes/users'); //user registration route of the web app
 const auth = require('./routes/auth');  //Authentication route for user login
+ 
 
 /*Custom Variables initialization*/
 if(!config.get('jwtPrivateKey')){
     console.log('FATAL ERROR!  jwtPrivateKey NOT INITIALISED IN CUSTOM VARIABLES');
     process.exit(-1);
 }
-
+const record = require('./routes/record');
 const app = express();   //Making an instance of the express application
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -51,6 +52,7 @@ app.use(express.static('public'));
 app.use('/', home);
 app.use('/user/register', users);
 app.use('/user/login', auth);
+app.use('/record', record);
 
 const port = process.env.PORT || config.get('port');  //defining the port to the application in the environment variables or 3000.
 

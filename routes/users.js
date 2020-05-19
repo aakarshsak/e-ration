@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
         return res.status(400).send(error.details[0].message);
     }
 
-    let user = await User.findOne({ email : req.body.email });
+    let user = await User.findOne({ ration : req.body.aadhar });
     if(user) {
         debug('User already exist...') ;
         return res.status(400).send('User already exist...');
@@ -59,7 +59,7 @@ router.post('/', async (req, res) => {
         return res.status(400).send('Password does not match.');
     }
 
-    user = await new User(_.pick(req.body, ["name", "email", "password", "aadhar", "address", "gender"]));
+    user = await new User(_.pick(req.body, ["name", "email", "password", "ration", "address", "gender"]));
 
     const salt = await bcrypt.genSalt(2);
     user.password = await bcrypt.hash(user.password, salt);
@@ -67,7 +67,7 @@ router.post('/', async (req, res) => {
     const token = user.getUserToken();
 
     user = await user.save();
-    user = _.pick(user, ['name', 'email']);
+    user = _.pick(user, ['name', 'ration']);
 
     debug('Successfully posted...')
     res.send('Account Successfully Created...');
