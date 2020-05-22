@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     name : {  //type : String, required : true, minlength : 10, maxlength : 255 
        first : { required : true, minlength : 3, maxlength : 255, type : String }, 
        middle : { maxlength : 255, type : String }, 
-       last : { required : true, minlength : 5, maxlength : 255, type : String }, 
+       last : { required : true, minlength : 3, maxlength : 255, type : String }, 
     },
     email : { type : String, required : true, minlength : 10, maxlength : 255 },
     password : { type : String, required : true, minlength : 6, maxlength : 255 },
@@ -41,7 +41,7 @@ function validateUser(user) {
         name : {
             first : Joi.string().min(3).max(255).required(),
             middle : Joi.string().max(255),
-            last : Joi.string().min(5).max(255).required(),
+            last : Joi.string().min(3).max(255).required(),
         },
         email : Joi.string().email().min(10).max(255).required(),
         password : Joi.string().min(6).max(255).required(),

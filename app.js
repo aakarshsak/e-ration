@@ -20,6 +20,7 @@ var bodyParser = require("body-parser");
 const home = require('./routes/home');  //home route of the web application
 const users = require('./routes/users'); //user registration route of the web app
 const auth = require('./routes/auth');  //Authentication route for user login
+const complaints = require('./routes/complaints');
  
 
 /*Custom Variables initialization*/
@@ -53,6 +54,7 @@ app.use('/', home);
 app.use('/user/register', users);
 app.use('/user/login', auth);
 app.use('/record', record);
+app.use('/complaints', complaints);
 
 const port = process.env.PORT || config.get('port');  //defining the port to the application in the environment variables or 3000.
 
