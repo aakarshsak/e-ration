@@ -86,4 +86,14 @@ router.post('/record_list', async (req, res) => {
     res.status(200).send({result});
 });
 
+router.post('/order_list', async (req, res) => {
+    const result = await Record.find({ ration : req.body.ration });
+    if(!result) {
+        debug('no orders');
+        return res.status(400).send('No Order found...');
+    }
+    res.status(200).send({result});
+});
+
+
 module.exports = router;
